@@ -7,13 +7,13 @@ const RightPane = ({ headerText, buttonSymbol, buttonText, productCards, onButto
     
     let productCardsToBeRendered = productCards.map(product => {
         if (product.name === "Placeholder") {
-            return (<li className="productsList__item">
+            return (<li key={product.id} className="productsList__item">
                 <button onClick={addProduct} className="productsList__button">{buttonSymbol || "*"}</button>
                 <p className="productsList__text">{buttonText || "Lorem Ipsum"}</p>
             </li>);
         }
         return (
-            <li className="productsList__item">
+            <li key={product.id} className="productsList__item">
                 <img className="productsList__img" src={product.img} alt={product.name} />
                 <div className="productsList__fade">
                     <p className="productsList__imageText">{product.name}</p>
@@ -24,7 +24,7 @@ const RightPane = ({ headerText, buttonSymbol, buttonText, productCards, onButto
     return (
         <section class="productsWrapper">
             <header className="header">
-                <h1 class="header__h1">{headerText || "Placeholder"}</h1>
+                <h1 className="header__h1">{headerText || "Placeholder"}</h1>
             </header>
             <ul className="productsList">
                 {productCardsToBeRendered}

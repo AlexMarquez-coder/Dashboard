@@ -11,10 +11,9 @@ import navigationItemsObject from "../../data/navigationItem";
 // Styling / CSS
 import "./Dashboard.css"
 class Dashboard extends React.Component {
-
     constructor(props) {
         super(props);
-        this.state = { productCards: [], open: true };
+        this.state = {productCards: [], open: true, cardClicked: {}};
     }
 
     componentDidMount() {
@@ -42,20 +41,27 @@ class Dashboard extends React.Component {
         })
     }
 
-    onCardClicked = () =>{
-        this.setState({ open: !this.state.open })
+    onCardClicked = (idFromCard) =>{
+        console.log(this.state.productCards[idFromCard -1]);
+        this.setState(
+            {
+                open: !this.state.open, 
+                cardClicked: this.state.productCards[idFromCard - 1],
+            }
+        );
     }
 
-    render() {           
+    render() { 
+        console.log(this.state.cardClicked);          
         if (this.state.open === true) {
             return (
                 <article className="dashboard">
                     <LeftPane navigationListItems={navigationItemsObject.navigationItem} let buttonText="Go Premium" />
-                    <RightPane onCardClicked={this.onCardClicked} onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe" />
+                    <RightPane onProductCardClicked={this.onCardClicked} onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe" />
                 </article>);
         }
         return (
-            <Popup addButtonClicked={this.addButtonClicked} />
+            <Popup cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
         )
     }
 }

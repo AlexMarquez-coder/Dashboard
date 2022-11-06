@@ -10,12 +10,14 @@ import productsObject from "../../data/products";
 import navigationItemsObject from "../../data/navigationItem";
 // Styling / CSS
 import "./Dashboard.css"
+import products from "../../data/products";
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {productCards: [], 
-            open: true, 
-            cardClicked: {}, 
+        this.state = {
+            productCards: [],
+            open: true,
+            cardClicked: {},
             editMode: false,
         };
     }
@@ -45,26 +47,37 @@ class Dashboard extends React.Component {
         })
     }
 
-    onCardClicked = (idFromCard) =>{
-        if(this.state.productCards[idFromCard - 1].name === "Placeholder"){
-            this.setState({
-                editMode: false,
-            })
-        }
-        else{
-            this.setState({
-                editMode: true,
-            });
-        }
-        this.setState(
-            {                
-                open: !this.state.open, 
-                cardClicked: this.state.productCards[idFromCard - 1],
+    editButtonClicked = (inputFromPopup) => {
+        let productCards = this.state.productCards;
+        let newState = productCards.map(product => {
+            if(this.state.cardClicked.id === product.id){
+                product.name = inputFromPopup;
+                return product;
             }
-        );
+            else{
+                return product;
+            }
+        });
+        this.setState({productCards: newState, open: true});
     }
 
-    render() {           
+    onCardClicked = (idFromCard) => {
+        if (this.state.productCards[idFromCard - 1].name === "Placeholder") {
+            this.setState({
+                editMode: false,
+                open: !this.state.open,
+                cardClicked: this.state.productCards[idFromCard - 1],
+            });
+            return;
+        }
+        this.setState({
+            editMode: true,
+            open: !this.state.open,
+            cardClicked: this.state.productCards[idFromCard - 1],
+        });
+    }
+
+    render() {
         if (this.state.open === true) {
             return (
                 <article className="dashboard">
@@ -73,7 +86,7 @@ class Dashboard extends React.Component {
                 </article>);
         }
         return (
-            <Popup editMode={this.state.editMode} cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
+            <Popup editButtonClicked={this.editButtonClicked} editMode={this.state.editMode} cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
         )
     }
 }

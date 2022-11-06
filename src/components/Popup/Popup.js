@@ -21,7 +21,7 @@ class Popup extends React.Component {
     }
 
     editProduct = () =>{
-        console.log("edit");
+        this.props.editButtonClicked(this.state.input);
     }
 
     render() {

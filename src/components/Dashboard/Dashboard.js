@@ -13,7 +13,11 @@ import "./Dashboard.css"
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {productCards: [], open: true, cardClicked: {}};
+        this.state = {productCards: [], 
+            open: true, 
+            cardClicked: {}, 
+            editMode: false,
+        };
     }
 
     componentDidMount() {
@@ -42,17 +46,25 @@ class Dashboard extends React.Component {
     }
 
     onCardClicked = (idFromCard) =>{
-        console.log(this.state.productCards[idFromCard -1]);
+        if(this.state.productCards[idFromCard - 1].name === "Placeholder"){
+            this.setState({
+                editMode: false,
+            })
+        }
+        else{
+            this.setState({
+                editMode: true,
+            });
+        }
         this.setState(
-            {
+            {                
                 open: !this.state.open, 
                 cardClicked: this.state.productCards[idFromCard - 1],
             }
         );
     }
 
-    render() { 
-        console.log(this.state.cardClicked);          
+    render() {           
         if (this.state.open === true) {
             return (
                 <article className="dashboard">
@@ -61,7 +73,7 @@ class Dashboard extends React.Component {
                 </article>);
         }
         return (
-            <Popup cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
+            <Popup editMode={this.state.editMode} cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
         )
     }
 }

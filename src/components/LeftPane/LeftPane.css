@@ -54,3 +54,14 @@
     cursor: pointer;
     filter: hue-rotate(40deg);
 }
+
+@media (max-width: 650px) {
+    .dashboard__wrapper{
+        gap: 2rem;
+    }
+
+    .dashboard__ul{
+        align-items: center;
+    }
+    
+}

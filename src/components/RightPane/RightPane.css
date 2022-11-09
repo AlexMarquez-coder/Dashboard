@@ -83,3 +83,11 @@
     filter: hue-rotate(40deg);
 
 }
+
+@media (max-width: 650px) {
+    .header__h1{
+        font-size: 200%;
+        text-align: center;
+    }
+     
+}

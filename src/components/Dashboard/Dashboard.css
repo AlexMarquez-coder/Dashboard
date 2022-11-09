@@ -6,3 +6,11 @@
     grid-template-columns: 30% 70%;
     border-radius: 1rem;
 }
+
+@media (max-width: 650px) {
+    
+    .dashboard{
+        display: flex;
+        flex-direction: column;
+    }
+}
